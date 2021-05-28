@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import {ImagesTab} from "./components/ImgTab/ImagesTab"
+import {useStore} from "effector-react";
+import $store from "./effector/effector";
+import {createUseStyles} from "react-jss";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+const App: React.FC = () => {
+
+    const styles = createUseStyles({
+        galleryWrapper: {
+            display: 'flex',
+            flexWrap: 'wrap',
+            maxWidth: '1000px',
+            justifyContent: 'center',
+            margin: '0 auto',
+            backgroundColor: 'turquoise'
+        }
+    })()
+
+    const getImagesData = useStore($store)
+
+    return (
+        <div className={styles.galleryWrapper}>
+            {getImagesData.map(i => {
+                return <ImagesTab key={i.id}
+                                  id={i.id}
+                                  photos={i.photos}
+                                  likesCount={i.likesCount}
+                                  comments={i.comments}
+                />
+            })}
+        </div>
+    )
 }
 
-export default App;
+export default App
