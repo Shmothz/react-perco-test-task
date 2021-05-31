@@ -3,7 +3,7 @@ import {createEvent, createStore} from "effector";
 const store = [
     {
         id: 1,
-        photos: 'https://lh3.googleusercontent.com/proxy/YADsN2H5Q1E9EGQeaW-JIR8tikVCA5k6Kk9fCiG8RIOL3tdMaf0QI3iMBMpyOvpm8-6hkiLzuLddFVJ5qRXaDMfF6UJRAG04-mp2',
+        photos: 'https://cdna.artstation.com/p/assets/images/images/016/605/980/large/low-side-ways-jdm-gtr.jpg?1552788825',
         likesCount: 0,
         comments: ['первый комментарий', 'второй комментарий', 'третий комментарий'] as Array<string>
     }, {
@@ -63,6 +63,9 @@ type AddNewComment = {
 export const addNewComment = createEvent<AddNewComment>()
 
 const $store = createStore<storeType>(store)
-    .on(addNewComment, (state, { index, newCommentText}) => {state[index].comments.push(newCommentText)})
+    .on(addNewComment, (state, { index, newCommentText}) => {
+        state[index].comments.push(newCommentText)
+        return [...state]
+    })
 
 export default $store

@@ -29,7 +29,6 @@ export const ImagesTab: React.FC<ImagesTabPropsType> = (props) => {
             objectFit: 'cover'
         }
     })()
-
     const [visionMode, setVisionMode] = useState<boolean>(false)
 
     return (

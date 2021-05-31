@@ -12,8 +12,7 @@ type Values = {
     newComment: string
 }
 
-export const LightboxInfo: React.FC<LightboxInfoPropsType> = (props) => {
-
+export const LightboxInfo: React.FC<LightboxInfoPropsType> = ({id, likesCount, comments}) => {
     const styles = createUseStyles({
         lightboxInfoWrapper: {
             width: '90%',
@@ -29,25 +28,36 @@ export const LightboxInfo: React.FC<LightboxInfoPropsType> = (props) => {
             borderRadius: '4px'
         }
     })()
-    const onSubmit = (values:Values) => {
-        addNewComment({index: props.id - 1, newCommentText: values.newComment})
-    }
 
-    return <div className={styles.lightboxInfoWrapper} onClick={e => e.stopPropagation()} key={props.id}>
+
+    const onSubmit = (values: Values) => {
+        addNewComment({index: id - 1, newCommentText: values.newComment})
+        // useForm('newComment').reset()
+    }
+    return <div className={styles.lightboxInfoWrapper} onClick={e => e.stopPropagation()} key={id}>
         <div className={styles.likesWrapper}>
-            {props.likesCount}
+            {likesCount}
         </div>
         <div className={styles.commentsWrapper}>
-            {props.comments.map(i => <div key={i}>{i}</div>)}
+            {comments.map(i => <div key={i}>{i}</div>)}
         </div>
         <Form
             onSubmit={onSubmit}
-            render={({ handleSubmit, form, submitting, pristine, values }) => (
-                <form onSubmit={handleSubmit}>
+            render={({handleSubmit, form, submitting, pristine, values}) => (
+                <form
+                    onSubmit={event => {
+                        handleSubmit(event)
+                        form.reset()
+                    }}
+                >
                     <div>
-                        <label>Новый комменатарий</label>
-                        <Field name="newComment" component="textarea" placeholder='Как Вам фотография?' />
-                        <button type='submit'>Отправить комментарий</button>
+                        <label>Notes</label>
+                        <Field name="newComment" component="textarea" placeholder="Новый комментарий!"/>
+                    </div>
+                    <div>
+                        <button type="submit" disabled={submitting || pristine}>
+                            Submit
+                        </button>
                     </div>
                 </form>
             )}
