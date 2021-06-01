@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import ReactDOM from "react-dom";
 import {createUseStyles} from "react-jss";
 import {LightboxInfo} from "./LightboxInfo";
@@ -17,15 +17,17 @@ export const Lightbox:React.FC<LightboxPropsType> = (props) => {
 
     const styles = createUseStyles({
         lightboxWrapper: {
-            position: 'fixed',
+            position: 'absolute',
             top: '0',
+            bottom: '0',
             left: '0',
+            right: '0',
             width: '100%',
-            height: '100vh',
+            height: '200vh',
             zIndex: '1',
             backgroundColor: 'rgba(0,0,0,0.5)',
             display: 'flex',
-            justifyContent: 'center',
+            // justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
             cursor: 'pointer'
@@ -36,6 +38,8 @@ export const Lightbox:React.FC<LightboxPropsType> = (props) => {
         }
     })()
 
+    const [likes, setLikes] = useState(props.likesCount) // по хорошему это должно реализовываться через отправку на сервер
+
     return ReactDOM.createPortal(
         <div className={styles.lightboxWrapper} onClick={() => {
             props.cancelVisionMode()
@@ -44,8 +48,9 @@ export const Lightbox:React.FC<LightboxPropsType> = (props) => {
                  src={props.photos}
                  alt={`Images ID: ${props.id}`}
                  onClick={e => e.stopPropagation()}
+                 onDoubleClick={() => setLikes(likes + 1)}
             />
-            <LightboxInfo comments={props.comments} likesCount={props.likesCount} id={props.id}/>
+            <LightboxInfo comments={props.comments} likesCount={likes} id={props.id}/>
         </div>
         , appRoot)
 }
