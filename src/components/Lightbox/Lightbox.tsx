@@ -23,7 +23,7 @@ export const Lightbox:React.FC<LightboxPropsType> = (props) => {
             left: '0',
             right: '0',
             width: '100%',
-            height: '200vh',
+            height: '200vh', // здесь косяк , надо придумать другое адаптивное решение.
             zIndex: '1',
             backgroundColor: 'rgba(0,0,0,0.5)',
             display: 'flex',
