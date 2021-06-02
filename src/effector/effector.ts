@@ -59,12 +59,20 @@ type AddNewComment = {
     index: number,
     newCommentText: string
 }
+type AddNewLike = {
+    index: number
+}
 
 export const addNewComment = createEvent<AddNewComment>()
+export const addNewLike = createEvent<AddNewLike>()
 
 const $store = createStore<storeType>(store)
     .on(addNewComment, (state, { index, newCommentText}) => {
         state[index].comments.push(newCommentText)
+        return [...state]
+    })
+    .on(addNewLike, (state, {index}) => {
+        state[index].likesCount = state[index].likesCount + 1
         return [...state]
     })
 
