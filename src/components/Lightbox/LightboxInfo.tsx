@@ -77,8 +77,10 @@ export const LightboxInfo: React.FC<LightboxInfoPropsType> = ({id, likesCount, c
         addNewComment({index: id - 1, newCommentText: values.newComment})
         // useForm('newComment').reset()
     }
+
     return <div className={styles.lightboxInfoWrapper} onClick={e => e.stopPropagation()} key={id}>
         <div className={styles.likesWrapper}>
+            (Чтобы поставить отметку нравится кликните два раза по фотографии)
             Нравится: {likesCount}
         </div>
         <div className={styles.commentsWrapper}>
@@ -96,6 +98,7 @@ export const LightboxInfo: React.FC<LightboxInfoPropsType> = ({id, likesCount, c
                     }}
                     className={styles.formWrapper}
                 >
+                    <label>Напишите свой новый комментарий:</label>
                     <Field name="newComment" component="textarea" placeholder="Новый комментарий!"
                            className={styles.inputField}
                            rows='3'/>

@@ -51,7 +51,17 @@ const store = [
         photos: 'https://i.pinimg.com/originals/9b/f0/be/9bf0be77314beb7f22497247c3f475a3.jpg',
         likesCount: 0,
         comments: [] as Array<string>
-    },
+    }, {
+        id: 11,
+        photos: 'https://i.pinimg.com/originals/3a/a1/d6/3aa1d6dcea710303214df1ccb32d9258.jpg',
+        likesCount: 0,
+        comments: [] as Array<string>
+    }, {
+        id: 12,
+        photos: 'https://img3.goodfon.ru/wallpaper/nbig/9/2f/mitsubishi-evolution-evo-7-8.jpg',
+        likesCount: 0,
+        comments: [] as Array<string>
+    }
 ]
 
 export type storeType = typeof store
@@ -67,7 +77,7 @@ export const addNewComment = createEvent<AddNewComment>()
 export const addNewLike = createEvent<AddNewLike>()
 
 const $store = createStore<storeType>(store)
-    .on(addNewComment, (state, { index, newCommentText}) => {
+    .on(addNewComment, (state, {index, newCommentText}) => {
         state[index].comments.push(newCommentText)
         return [...state]
     })
