@@ -31,12 +31,8 @@ export const App: React.FC = () => {
 
     return (
         <div className={styles.galleryWrapper}>
-            {photocards.map(i => {
-                return <ImagesTab key={i.id}
-                                  id={i.id}
-                                  photos={i.photos}
-                                  likesCount={i.likesCount}
-                                  comments={i.comments}
+            {photocards.map(item => {
+                return <ImagesTab key={item.id} item={item}
                 />
             })}
         </div>

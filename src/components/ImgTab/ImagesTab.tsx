@@ -1,12 +1,10 @@
 import React, {useState} from "react"
 import {createUseStyles} from "react-jss";
 import {Lightbox} from "../Lightbox";
+import {IPhotocard} from "../../types";
 
 type ImagesTabPropsType = {
-    id: number,
-    photos: string,
-    likesCount: number,
-    comments: Array<string>
+    item: IPhotocard
 }
 
 export const ImagesTab: React.FC<ImagesTabPropsType> = (props) => {
@@ -34,11 +32,11 @@ export const ImagesTab: React.FC<ImagesTabPropsType> = (props) => {
     return (
         <>
             <div className={styles.imageTabWrapper} onClick={() => setVisible(true)}>
-                <img src={props.photos} alt={`Images ID: ${props.id}`}
+                <img src={props.item.photos} alt={`Images ID: ${props.item.id}`}
                      className={styles.img}
                 />
             </div>
-            {isVisible && <Lightbox {...props} cancelVisionMode={() => setVisible(false)} key={props.id}/>}
+            {isVisible && <Lightbox {...props} toggleVisible={setVisible} key={props.item.id}/>}
         </>
     )
 }

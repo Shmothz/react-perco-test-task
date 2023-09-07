@@ -1,18 +1,16 @@
-import React from "react"
+import React, {SetStateAction} from "react"
 import ReactDOM from "react-dom";
 import {createUseStyles} from "react-jss";
 import {LightboxInfo} from "./LightboxInfo";
 import {addNewLike} from "../../effector/effector";
+import {IPhotocard} from "../../types";
 
 type LightboxPropsType = {
-    id: number,
-    photos: string,
-    likesCount: number,
-    comments: Array<string>,
-    cancelVisionMode: () => void
+    item: IPhotocard
+    toggleVisible: React.Dispatch<SetStateAction<boolean>>
 }
 
-export const Lightbox: React.FC<LightboxPropsType> = ({id,photos,likesCount,comments, cancelVisionMode}) => {
+export const Lightbox: React.FC<LightboxPropsType> = ({item, toggleVisible}) => {
 
     const appRoot = document.getElementById('root') as HTMLElement
 
@@ -49,15 +47,15 @@ export const Lightbox: React.FC<LightboxPropsType> = ({id,photos,likesCount,comm
         <>
             <div className={styles.lightboxBackground}></div>
             <div className={styles.lightboxWrapper} onClick={() => {
-                cancelVisionMode()
+                toggleVisible(false)
             }}>
                 <img className={styles.ligthboxImg}
-                     src={photos}
-                     alt={`Images ID: ${id}`}
+                     src={item.photos}
+                     alt={`Images ID: ${item.id}`}
                      onClick={e => e.stopPropagation()}
-                     onDoubleClick={() => {addNewLike({index: id - 1})}}
+                     onDoubleClick={() => {addNewLike({index: item.id - 1})}}
                 />
-                <LightboxInfo comments={comments} likesCount={likesCount} id={id}/>
+                <LightboxInfo comments={item.comments} likesCount={item.likesCount} id={item.id}/>
             </div>
         </>
         , appRoot)
