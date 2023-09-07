@@ -1,11 +1,11 @@
-import React from 'react'
-import {ImagesTab} from "./components/ImgTab/ImagesTab"
+import React, {useEffect} from 'react'
+import {ImagesTab} from "./components/ImgTab"
 import {useStore} from "effector-react";
-import $store from "./effector/effector";
+import $store, {fetchPhotocardsFx} from "./effector/effector";
 import {createUseStyles} from "react-jss";
 
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
 
     const styles = createUseStyles({
         galleryWrapper: {
@@ -18,11 +18,20 @@ const App: React.FC = () => {
         }
     })()
 
-    const getImagesData = useStore($store)
+    useEffect(() => {
+        fetchPhotocardsFx()
+    }, [])
+
+    const {photocards, loading, error} = useStore($store)
+
+
+    if (loading) return <div>loading...</div>
+
+    if (error) return <div>error...</div>
 
     return (
         <div className={styles.galleryWrapper}>
-            {getImagesData.map(i => {
+            {photocards.map(i => {
                 return <ImagesTab key={i.id}
                                   id={i.id}
                                   photos={i.photos}
@@ -33,5 +42,3 @@ const App: React.FC = () => {
         </div>
     )
 }
-
-export default App

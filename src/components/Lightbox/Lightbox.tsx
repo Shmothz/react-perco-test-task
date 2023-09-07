@@ -12,7 +12,7 @@ type LightboxPropsType = {
     cancelVisionMode: () => void
 }
 
-export const Lightbox: React.FC<LightboxPropsType> = (props) => {
+export const Lightbox: React.FC<LightboxPropsType> = ({id,photos,likesCount,comments, cancelVisionMode}) => {
 
     const appRoot = document.getElementById('root') as HTMLElement
 
@@ -49,15 +49,15 @@ export const Lightbox: React.FC<LightboxPropsType> = (props) => {
         <>
             <div className={styles.lightboxBackground}></div>
             <div className={styles.lightboxWrapper} onClick={() => {
-                props.cancelVisionMode()
+                cancelVisionMode()
             }}>
                 <img className={styles.ligthboxImg}
-                     src={props.photos}
-                     alt={`Images ID: ${props.id}`}
+                     src={photos}
+                     alt={`Images ID: ${id}`}
                      onClick={e => e.stopPropagation()}
-                     onDoubleClick={() => {addNewLike({index: props.id - 1})}}
+                     onDoubleClick={() => {addNewLike({index: id - 1})}}
                 />
-                <LightboxInfo comments={props.comments} likesCount={props.likesCount} id={props.id}/>
+                <LightboxInfo comments={comments} likesCount={likesCount} id={id}/>
             </div>
         </>
         , appRoot)

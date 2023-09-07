@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {createUseStyles} from "react-jss";
-import {Lightbox} from "../Lightbox/Lightbox";
+import {Lightbox} from "../Lightbox";
 
 type ImagesTabPropsType = {
     id: number,
@@ -29,18 +29,16 @@ export const ImagesTab: React.FC<ImagesTabPropsType> = (props) => {
             objectFit: 'cover'
         }
     })()
-    const [visionMode, setVisionMode] = useState<boolean>(false)
+    const [isVisible, setVisible] = useState<boolean>(false)
 
     return (
         <>
-            <div className={styles.imageTabWrapper} onClick={() => setVisionMode(true)}>
+            <div className={styles.imageTabWrapper} onClick={() => setVisible(true)}>
                 <img src={props.photos} alt={`Images ID: ${props.id}`}
                      className={styles.img}
                 />
             </div>
-            {visionMode
-                ? <Lightbox {...props} cancelVisionMode={() => setVisionMode(false)} key={props.id}/>
-                : null}
+            {isVisible && <Lightbox {...props} cancelVisionMode={() => setVisible(false)} key={props.id}/>}
         </>
     )
 }
